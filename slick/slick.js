@@ -1842,7 +1842,6 @@
                 _.$slides.eq(index).addClass('slick-center');
             }
             _.asNavFor(index);
-            return;
         }
         _.slideHandler(index);
 
