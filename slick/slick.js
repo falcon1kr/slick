@@ -650,16 +650,13 @@
 
             case 'previous':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
-                if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate);
-                }
+                _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate);
+
                 break;
 
             case 'next':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : indexOffset;
-                if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate);
-                }
+                _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate);
                 break;
 
             case 'index':
@@ -1233,6 +1230,7 @@
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
++                   _.animateHeight();
                     image.animate({
                         opacity: 1
                     }, 200);
