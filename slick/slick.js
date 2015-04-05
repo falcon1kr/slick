@@ -5,14 +5,12 @@
 \__ \ | | (__|   < _ | \__ \
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
-
  Version: 1.5.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
-
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
 (function(factory) {
@@ -1718,45 +1716,50 @@
         _.$slider.find('.slick-slide').removeClass('slick-active').attr('aria-hidden', 'true').removeClass('slick-center');
         allSlides = _.$slider.find('.slick-slide');
 
-        if (_.options.centerMode === true) {
-
-            centerOffset = Math.floor(_.options.slidesToShow / 2);
-
-            if (_.options.infinite === true) {
-
-                if (index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
-                    _.$slides.slice(index - centerOffset, index + centerOffset + 1).addClass('slick-active').attr('aria-hidden', 'false');
-                } else {
-                    indexOffset = _.options.slidesToShow + index;
-                    allSlides.slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2).addClass('slick-active').attr('aria-hidden', 'false');
-                }
-
-                if (index === 0) {
-                    allSlides.eq(allSlides.length - 1 - _.options.slidesToShow).addClass('slick-center');
-                } else if (index === _.slideCount - 1) {
-                    allSlides.eq(_.options.slidesToShow).addClass('slick-center');
-                }
-
-            }
-
-            _.$slides.eq(index).addClass('slick-center');
+        if (_.slideCount <= _.options.slidesToShow) {
+            allSlides.addClass('slick-active').attr('aria-hidden', 'false');
 
         } else {
+            if (_.options.centerMode === true) {
 
-            if (index >= 0 && index <= (_.slideCount - _.options.slidesToShow)) {
-                _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active').attr('aria-hidden', 'false');
-            } else if (allSlides.length <= _.options.slidesToShow) {
-                allSlides.addClass('slick-active').attr('aria-hidden', 'false');
-            } else {
-                remainder = _.slideCount % _.options.slidesToShow;
-                indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
-                if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
-                    allSlides.slice(indexOffset - (_.options.slidesToShow - remainder), indexOffset + remainder).addClass('slick-active').attr('aria-hidden', 'false');
-                } else {
-                    allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active').attr('aria-hidden', 'false');
+                centerOffset = Math.floor(_.options.slidesToShow / 2);
+
+                if (_.options.infinite === true) {
+
+                    if (index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
+                        _.$slides.slice(index - centerOffset, index + centerOffset + 1).addClass('slick-active').attr('aria-hidden', 'false');
+                    } else {
+                        indexOffset = _.options.slidesToShow + index;
+                        allSlides.slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2).addClass('slick-active').attr('aria-hidden', 'false');
+                    }
+
+                    if (index === 0) {
+                        allSlides.eq(allSlides.length - 1 - _.options.slidesToShow).addClass('slick-center');
+                    } else if (index === _.slideCount - 1) {
+                        allSlides.eq(_.options.slidesToShow).addClass('slick-center');
+                    }
+
                 }
-            }
 
+                _.$slides.eq(index).addClass('slick-center');
+
+            } else {
+
+                if (index >= 0 && index <= (_.slideCount - _.options.slidesToShow)) {
+                    _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active').attr('aria-hidden', 'false');
+                } else if (allSlides.length <= _.options.slidesToShow) {
+                    allSlides.addClass('slick-active').attr('aria-hidden', 'false');
+                } else {
+                    remainder = _.slideCount % _.options.slidesToShow;
+                    indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
+                    if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
+                        allSlides.slice(indexOffset - (_.options.slidesToShow - remainder), indexOffset + remainder).addClass('slick-active').attr('aria-hidden', 'false');
+                    } else {
+                        allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active').attr('aria-hidden', 'false');
+                    }
+                }
+
+            }
         }
 
         if (_.options.lazyLoad === 'ondemand') {
@@ -1857,10 +1860,6 @@
         }
 
         if (_.options.fade === true && _.currentSlide === index) {
-            return;
-        }
-
-        if (_.slideCount <= _.options.slidesToShow) {
             return;
         }
 
